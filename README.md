@@ -1,6 +1,11 @@
 yii2-gearman
 ============
 
+IMPORTANT! Under development. 
+
+This extension built on [this](https://github.com/Filsh/yii2-gearman) and [this](https://github.com/sinergi/gearman).
+The goal of the project is opportunity of starting multiple worker processes on one machine. 
+
 ## Installation
 
 It is recommended that you install the Gearman library [through composer](http://getcomposer.org/). To do so, add the following lines to your ``composer.json`` file.
