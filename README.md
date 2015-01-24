@@ -39,7 +39,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ...
 'controllerMap' => [
     'gearman' => [
-        'class' => 'filsh\yii2\gearman\GearmanController',
+        'class' => 'shakura\yii2\gearman\GearmanController',
         'gearmanComponent' => 'gearman'
     ],
     ...
