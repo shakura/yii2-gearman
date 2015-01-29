@@ -24,10 +24,10 @@ class GearmanComponent extends \yii\base\Component
     
     private $_process;
     
-    public function getApplication()
+    public function getApplication($id)
     {
         if($this->_application === null) {
-            $app = new Application($this->getConfig(), $this->getProcess());
+            $app = new Application($id, $this->getConfig(), $this->getProcess($id));
             foreach($this->jobs as $name => $job) {
                 $job = Yii::createObject($job);
                 if(!($job instanceof JobInterface)) {
@@ -82,10 +82,10 @@ class GearmanComponent extends \yii\base\Component
     /**
      * @return Process
      */
-    public function getProcess()
+    public function getProcess($id)
     {
         if ($this->_process === null) {
-            $this->setProcess((new Process($this->getConfig())));
+            $this->setProcess((new Process($this->getConfig(), $id)));
         }
         return $this->_process;
     }

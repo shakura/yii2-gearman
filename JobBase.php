@@ -21,6 +21,10 @@ abstract class JobBase extends \yii\base\Component implements JobInterface
     {
         $this->name = $name;
     }
+
+    public function init(){
+        return true;
+    }
     
     /**
      * @param \GearmanJob $job

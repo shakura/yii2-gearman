@@ -20,4 +20,6 @@ interface JobInterface
      * @var $name string
      */
     public function setName($name);
+
+    public function init();
 }

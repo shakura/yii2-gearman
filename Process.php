@@ -6,8 +6,8 @@ use Psr\Log\LoggerInterface;
 
 class Process
 {
-    const PID_FILE = 'gearmanhandler.pid';
-    const LOCK_FILE = 'gearmanhandler.lock';
+    const PID_FILE = 'gearmanhandler';
+    const LOCK_FILE = 'gearmanhandler';
 
     /**
      * @var Config
@@ -25,11 +25,17 @@ class Process
     private $lock;
 
     /**
+     * @var int
+     */
+    private $workerId;
+
+    /**
      * @param Config $config
      * @param LoggerInterface $logger
      */
-    public function __construct(Config $config, LoggerInterface $logger = null)
+    public function __construct(Config $config, $id, LoggerInterface $logger = null)
     {
+        $this->workerId = $id;
         $this->setConfig($config);
         if (null !== $logger) {
             $this->setLogger($logger);
@@ -41,7 +47,7 @@ class Process
      */
     public function getPidFile()
     {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . self::PID_FILE;
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . self::PID_FILE . '.' . $this->workerId . '.pid';
     }
 
     /**
@@ -49,7 +55,7 @@ class Process
      */
     public function getLockFile()
     {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . self::LOCK_FILE;
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . self::LOCK_FILE . '.' . $this->workerId . '.lock';
     }
 
     public function stop()

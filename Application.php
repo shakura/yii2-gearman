@@ -11,7 +11,7 @@ use React\EventLoop\StreamSelectLoop;
 use Serializable;
 use shakura\yii2\gearman\exception\InvalidBootstrapClassException;
 
-class Application implements Serializable
+class Application
 {
     /**
      * @var Config
@@ -22,6 +22,12 @@ class Application implements Serializable
      * @var Process
      */
     private $process;
+
+
+    /**
+     * @var int
+     */
+    public $workerId;
 
     /**
      * @var array
@@ -64,11 +70,6 @@ class Application implements Serializable
     public $isAllowingJob = false;
 
     /**
-     * @var bool
-     */
-    public $isBootstraped = false;
-
-    /**
      * @var Application
      */
     private static $instance;
@@ -93,9 +94,11 @@ class Application implements Serializable
      * @param Process $process
      * @param LoggerInterface|null $logger
      */
-    public function __construct(Config $config = null, Process $process = null, $loop = null, LoggerInterface $logger = null)
+    public function __construct($workerId, Config $config = null, Process $process = null, $loop = null, LoggerInterface $logger = null)
     {
         static::$instance = $this;
+
+        $this->workerId = $workerId;
 
         if (null === $config) {
             $config = Config::getInstance();
@@ -148,44 +151,12 @@ class Application implements Serializable
         }
     }
 
-    public function bootstrap($restart = false)
-    {
-        if ($this->getConfig()->getEnvVariables()) {
-            $this->addEnvVariables();
-        }
-
-        $bootstrap = $this->getConfig()->getBootstrap();
-        if (is_file($bootstrap)) {
-            require_once $bootstrap;
-            if ($restart && null !== self::$instance && spl_object_hash($this) !== spl_object_hash(self::$instance)) {
-                self::$instance->unserialize($this->serialize());
-                self::$instance->run(false, true);
-                $this->kill = true;
-            }
-        }
-
-        $class = $this->getConfig()->getClass();
-        if (!empty($class)) {
-            $bootstrap = new $class();
-            if (!$bootstrap instanceof BootstrapInterface) {
-                throw new InvalidBootstrapClassException;
-            }
-            $bootstrap->run($this);
-        }
-
-        $this->isBootstraped = true;
-    }
-
     /**
      * @param bool $fork
      * @throws InvalidBootstrapClassException
      */
     public function run($fork = true, $restart = false)
     {
-        if (!$restart) {
-            $this->bootstrap();
-        }
-
         $this->runProcess($fork, $restart);
     }
 
@@ -297,10 +268,6 @@ class Application implements Serializable
 
         $callbacks = $this->getCallbacks();
 
-        if (!$this->isBootstraped) {
-            $this->bootstrap(true);
-        }
-
         if ($this->kill) {
             return;
         }
@@ -371,6 +338,9 @@ class Application implements Serializable
 
         $this->jobs[] = $job;
         $root = $this;
+        if(!$job->init()){
+            die();
+        }
         $worker->addFunction($job->getName(), function (\GearmanJob $gearmanJob) use ($root, $job) {
             $retval = $root->executeJob($job, $gearmanJob, $root);
             return serialize($retval);
@@ -480,7 +450,7 @@ class Application implements Serializable
     public function getProcess()
     {
         if (null === $this->process) {
-            $this->setProcess(new Process($this->getConfig(), $this->getLogger()));
+            $this->setProcess(new Process($this->getConfig(), $this->workerId, $this->getLogger()));
         }
         return $this->process;
     }
@@ -501,40 +471,5 @@ class Application implements Serializable
     {
         $this->logger = $logger;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function serialize()
-    {
-        return serialize([
-            'config' => $this->getConfig(),
-            'isBootstraped' => false,
-            'isAllowingJob' => true
-        ]);
-    }
-
-    /**
-     * @param string $serialized
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-
-        if (isset($data['config'])) {
-            $this->setConfig($data['config']);
-        }
-
-        $process = new Process($this->getConfig(), $this->getLogger());
-        $this->setProcess($process);
-
-        if (isset($data['isAllowingJob'])) {
-            $this->isAllowingJob = $data['isAllowingJob'];
-        }
-
-        if (isset($data['isBootstraped'])) {
-            $this->isBootstraped = $data['isBootstraped'];
-        }
     }
 }

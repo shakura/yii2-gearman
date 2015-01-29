@@ -17,10 +17,10 @@ class GearmanController extends Controller
     
     public $gearmanComponent = 'gearman';
     
-    public function actionStart()
+    public function actionStart($id)
     {
-        $app = $this->getApplication();
-        $process = $app->getProcess();
+        $app = $this->getApplication($id);
+        $process = $app->getProcess($id);
         
         if ($process->isRunning()) {
             $this->stdout("Failed: Process is already running\n", Console::FG_RED);
@@ -30,10 +30,10 @@ class GearmanController extends Controller
         $this->runApplication($app);
     }
     
-    public function actionStop()
+    public function actionStop($id)
     {
-        $app = $this->getApplication();
-        $process = $app->getProcess();
+        $app = $this->getApplication($id);
+        $process = $app->getProcess($id);
         
         if ($process->isRunning()) {
             $this->stdout("Success: Process is stopped\n", Console::FG_GREEN);
@@ -44,10 +44,10 @@ class GearmanController extends Controller
         $process->stop();
     }
     
-    public function actionRestart()
+    public function actionRestart($id)
     {
-        $app = $this->getApplication();
-        $process = $app->getProcess();
+        $app = $this->getApplication($id);
+        $process = $app->getProcess($id);
         
         if (!$process->isRunning()) {
             $this->stdout("Failed: Process is not running\n", Console::FG_RED);
@@ -71,7 +71,7 @@ class GearmanController extends Controller
             }
         }
         
-        $app->setProcess(new Process($app->getConfig(), $app->getLogger()));
+        $app->setProcess(new Process($app->getConfig(), $id, $app->getLogger()));
         $this->runApplication($app);
     }
     
@@ -85,10 +85,10 @@ class GearmanController extends Controller
         return array_merge(parent::options($id), $options);
     }
     
-    protected function getApplication()
+    protected function getApplication($id)
     {
         $component = Yii::$app->get($this->gearmanComponent);
-        return $component->getApplication();
+        return $component->getApplication($id);
     }
     
     protected function runApplication(Application $app)
