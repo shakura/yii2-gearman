@@ -1,8 +1,6 @@
 yii2-gearman
 ============
 
-IMPORTANT! Under development. 
-
 This extension built on [this](https://github.com/Filsh/yii2-gearman) and [this](https://github.com/sinergi/gearman).
 The goal of the project is opportunity of starting multiple worker processes on one machine. 
 
@@ -65,9 +63,9 @@ class SyncCalendar extends JobBase
 ## Manage workers
 
 ```cmd
-yii gearman/start --fork=true // start the workers as a daemon and fork proces
-yii gearman/restart --fork=true // restart workers
-yii gearman/stop // stop workers
+yii gearman/start 1 // start the worker with unique id
+yii gearman/restart 1 // restart worker
+yii gearman/stop 1 // stop worker
 ```
 
 ## Example using Dispatcher
@@ -78,5 +76,21 @@ Yii::$app->gearman->getDispatcher()->background('syncCalendar', new JobWorkload(
         'data' => 'value'
     ]
 ])); // run in background
-Yii::$app->gearman->getDispatcher()->execute('syncCalendar', ['data' => 'value']); // run synchronize
+Yii::$app->gearman->getDispatcher()->execute('syncCalendar', new JobWorkload([
+    'params' => [
+        'data' => 'value'
+    ]
+])); // run synchronize
+```
+
+## Example of [Supervisor](http://supervisord.org/) config to manage multiple workers
+
+```
+[program:yii-gearman-worker]
+command=php [path_to_your_app]/yii gearman/start %(process_num)s
+process_name=gearman-worker-%(process_num)s
+priority=1
+numprocs=5
+numprocs_start=1
+autorestart=true
 ```
