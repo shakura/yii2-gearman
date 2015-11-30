@@ -183,4 +183,35 @@ class Dispatcher
         $this->logger = $logger;
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function doStatus()
+    {
+        $client = $this->getClient()->getClient();
+
+        return $client->doStatus();
+    }
+
+    /**
+     * @param $job_handle
+     * @return array
+     */
+    public function jobStatus($job_handle)
+    {
+        $client = $this->getClient()->getClient();
+
+        return $client->jobStatus($job_handle);
+    }
+
+    /**
+     * @return string
+     */
+    public function doJobHandle()
+    {
+        $client = $this->getClient()->getClient();
+
+        return $client->doJobHandle();
+    }
 }

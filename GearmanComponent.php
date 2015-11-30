@@ -78,8 +78,9 @@ class GearmanComponent extends \yii\base\Component
         $this->_config = $config;
         return $this;
     }
-    
+
     /**
+     * @param $id
      * @return Process
      */
     public function getProcess($id)
