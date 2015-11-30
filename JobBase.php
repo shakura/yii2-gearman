@@ -5,6 +5,11 @@ namespace shakura\yii2\gearman;
 abstract class JobBase extends \yii\base\Component implements JobInterface
 {
     protected $name;
+
+    public function init()
+    {
+        return true;
+    }
     
     /**
      * @return string
@@ -21,10 +26,6 @@ abstract class JobBase extends \yii\base\Component implements JobInterface
     {
         $this->name = $name;
     }
-
-    public function init(){
-        return true;
-    }
     
     /**
      * @param \GearmanJob $job
@@ -37,5 +38,52 @@ abstract class JobBase extends \yii\base\Component implements JobInterface
             $workload = unserialize($data);
         }
         return $workload;
+    }
+
+    /**
+     * @param \GearmanJob $job
+     * @return string
+     */
+    protected function getUnique (\GearmanJob $job)
+    {
+        return $job->unique();
+    }
+
+    /**
+     * @param \GearmanJob $job
+     * @return int
+     */
+    protected function getWorkloadSize (\GearmanJob $job)
+    {
+        return $job->workloadSize();
+    }
+
+    /**
+     * @param \GearmanJob $job
+     * @param $numerator
+     * @param $denominator
+     * @return bool
+     */
+    protected function sendStatus (\GearmanJob $job, $numerator, $denominator)
+    {
+        return $job->sendStatus($numerator, $denominator);
+    }
+
+    /**
+     * @param \GearmanJob $job
+     * @return string
+     */
+    protected function functionName (\GearmanJob $job)
+    {
+        return $job->functionName();
+    }
+
+    /**
+     * @param \GearmanJob $job
+     * @return string
+     */
+    protected function handle (\GearmanJob $job)
+    {
+        return $job->handle();
     }
 }
