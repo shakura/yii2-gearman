@@ -89,9 +89,10 @@ class Application
     }
 
     /**
-     * @param Config $config
+     * @param $workerId
+     * @param Config|null $config
+     * @param Process|null $process
      * @param StreamSelectLoop|LibEventLoop $loop
-     * @param Process $process
      * @param LoggerInterface|null $logger
      */
     public function __construct($workerId, Config $config = null, Process $process = null, $loop = null, LoggerInterface $logger = null)
@@ -152,7 +153,8 @@ class Application
     }
 
     /**
-     * @param bool $fork
+     * @param bool|true $fork
+     * @param bool|false $restart
      * @throws InvalidBootstrapClassException
      */
     public function run($fork = true, $restart = false)
@@ -171,7 +173,8 @@ class Application
     }
 
     /**
-     * @param bool $fork
+     * @param bool|true $fork
+     * @param bool|false $restart
      * @throws Exception
      */
     public function runProcess($fork = true, $restart = false)

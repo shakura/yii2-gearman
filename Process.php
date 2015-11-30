@@ -31,7 +31,8 @@ class Process
 
     /**
      * @param Config $config
-     * @param LoggerInterface $logger
+     * @param $id
+     * @param LoggerInterface|null $logger
      */
     public function __construct(Config $config, $id, LoggerInterface $logger = null)
     {
@@ -105,6 +106,7 @@ class Process
 
     /**
      * @param resource|null $fp
+     * @return null
      */
     public function release($fp = null)
     {

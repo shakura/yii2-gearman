@@ -29,7 +29,7 @@ abstract class JobBase extends \yii\base\Component implements JobInterface
     
     /**
      * @param \GearmanJob $job
-     * @return \filsh\yii2\gearman\JobWorkload
+     * @return \shakura\yii2\gearman\JobWorkload
      */
     protected function getWorkload(\GearmanJob $job)
     {
