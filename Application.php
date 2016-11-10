@@ -277,6 +277,10 @@ class Application
                 break;
             }
 
+            if ($this->getConfig()->isExpired()) {
+                break;
+            }
+
             pcntl_signal_dispatch();
 
             if (count($callbacks)) {
