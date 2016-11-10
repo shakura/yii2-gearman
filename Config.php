@@ -381,7 +381,7 @@ class Config implements Serializable
             return false;
         }
 
-        if ($this->startTime + $this->workerLifetime >= time()) {
+        if ($this->startTime + $this->workerLifetime <= time()) {
             return true;
         }
 
