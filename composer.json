@@ -1,13 +1,13 @@
 {
-    "name": "shakura/yii2-gearman",
+    "name": "mortyu/yii2-gearman",
     "description": "Gearman handler for PHP",
     "keywords": ["yii", "extension"],
     "homepage": "https://github.com/shakura/yii2-gearman",
     "type": "yii2-extension",
     "license": "MIT",
     "support": {
-        "email": "waclaw@shakura.ru",
-        "source": "https://github.com/shakura/yii2-gearman"
+        "email": "mortyu@qq.com",
+        "source": "https://github.com/mortyu/yii2-gearman"
     },
     "authors": [
         {
