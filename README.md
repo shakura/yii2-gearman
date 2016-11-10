@@ -11,7 +11,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ```json
 {
     "require": {
-       "shakura/yii2-gearman": "dev-master"
+       "mortyu/yii2-gearman": "dev-master"
     }
 }
 ```
@@ -26,6 +26,7 @@ It is recommended that you install the Gearman library [through composer](http:/
           ['host' => '127.0.0.1', 'port' => 4730],
       ],
       'user' => 'www-data',
+      'workerLifetime' => 3600,
       'jobs' => [
           'syncCalendar' => [
               'class' => 'common\jobs\SyncCalendar'

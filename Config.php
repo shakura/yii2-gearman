@@ -25,8 +25,7 @@ class Config implements Serializable
     private $servers = [];
 
     /**
-     * @var int
-     * todo implement this
+     * @var int the worker will exit in workerLifetime seconds, or run forever if be 0
      */
     private $workerLifetime = 0;
 
@@ -49,6 +48,8 @@ class Config implements Serializable
      * @var Config
      */
     private static $instance;
+
+    private $startTime = 0;
 
     /**
      * gets the instance via lazy initialization (created on first usage)
@@ -73,6 +74,8 @@ class Config implements Serializable
         if (null !== $params) {
             $this->set($params);
         }
+
+        $this->startTime = time();
     }
 
     /**
@@ -107,7 +110,6 @@ class Config implements Serializable
                         break;
                     case 'workerLifetime':
                     case 'worker_lifetime':
-                        // not implemented
                         $this->setWorkerLifetime($value);
                         break;
                     case 'autoUpdate':
@@ -147,7 +149,6 @@ class Config implements Serializable
                 break;
             case 'workerLifetime':
             case 'worker_lifetime':
-                // not implemented
                 return $this->getWorkerLifetime();
                 break;
             case 'autoUpdate':
@@ -369,5 +370,21 @@ class Config implements Serializable
         $this->servers = $data['servers'];
         unset($data['servers']);
         $this->set($data);
+    }
+
+    /**
+     * @return bool whether the worker reach the end of life
+     */
+    public function isExpired()
+    {
+        if ($this->workerLifetime == 0) {
+            return false;
+        }
+
+        if ($this->startTime + $this->workerLifetime <= time()) {
+            return true;
+        }
+
+        return false;
     }
 }

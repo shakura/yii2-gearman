@@ -15,7 +15,9 @@ class GearmanComponent extends \yii\base\Component
     public $user;
     
     public $jobs = [];
-    
+
+    public $workerLifetime = 0;
+
     private $_application;
     
     private $_dispatcher;
@@ -66,7 +68,8 @@ class GearmanComponent extends \yii\base\Component
 
             $this->_config = new Config([
                 'servers' => $servers,
-                'user' => $this->user
+                'user' => $this->user,
+                'workerLifetime' => $this->workerLifetime
             ]);
         }
         
