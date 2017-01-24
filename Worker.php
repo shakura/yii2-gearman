@@ -1,11 +1,11 @@
 <?php
-namespace shakura\yii2\gearman;
+namespace thmrxx\yii2\gearman;
 
 use Serializable;
 use GearmanException;
 use GearmanWorker;
 use Psr\Log\LoggerInterface;
-use shakura\yii2\gearman\exception\ServerConnectionException;
+use thmrxx\yii2\gearman\exception\ServerConnectionException;
 
 class Worker
 {
