@@ -3,10 +3,6 @@
 namespace thmrxx\yii2\gearman;
 
 use Yii;
-use thmrxx\yii2\gearman\Application;
-use thmrxx\yii2\gearman\Dispatcher;
-use thmrxx\yii2\gearman\Config;
-use thmrxx\yii2\gearman\Process;
 
 class GearmanComponent extends \yii\base\Component
 {
@@ -23,7 +19,12 @@ class GearmanComponent extends \yii\base\Component
     private $_config;
     
     private $_process;
-    
+
+    /**
+     * @param $id
+     * @return \thmrxx\yii2\gearman\Application
+     * @throws \yii\base\InvalidConfigException
+     */
     public function getApplication($id)
     {
         if($this->_application === null) {
@@ -42,7 +43,10 @@ class GearmanComponent extends \yii\base\Component
         
         return $this->_application;
     }
-    
+
+    /**
+     * @return \thmrxx\yii2\gearman\Dispatcher
+     */
     public function getDispatcher()
     {
         if($this->_dispatcher === null) {
@@ -51,7 +55,10 @@ class GearmanComponent extends \yii\base\Component
         
         return $this->_dispatcher;
     }
-    
+
+    /**
+     * @return \thmrxx\yii2\gearman\Config
+     */
     public function getConfig()
     {
         if($this->_config === null) {

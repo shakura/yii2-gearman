@@ -11,7 +11,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ```json
 {
     "require": {
-       "shakura/yii2-gearman": "dev-master"
+       "thmrxx/yii2-gearman": "dev-master"
     }
 }
 ```
@@ -21,7 +21,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ```php
 'components' => [
   'gearman' => [
-      'class' => 'shakura\yii2\gearman\GearmanComponent',
+      'class' => 'thmrxx\yii2\gearman\GearmanComponent',
       'servers' => [
           ['host' => '127.0.0.1', 'port' => 4730],
       ],
@@ -37,7 +37,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ...
 'controllerMap' => [
     'gearman' => [
-        'class' => 'shakura\yii2\gearman\GearmanController',
+        'class' => 'thmrxx\yii2\gearman\GearmanController',
         'gearmanComponent' => 'gearman'
     ],
     ...
@@ -49,7 +49,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ```php
 namespace common\jobs;
 
-use shakura\yii2\gearman\JobBase;
+use thmrxx\yii2\gearman\JobBase;
 
 class SyncCalendar extends JobBase
 {

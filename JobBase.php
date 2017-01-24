@@ -28,13 +28,13 @@ abstract class JobBase extends \yii\base\Component implements JobInterface
     
     /**
      * @param \GearmanJob $job
-     * @return \filsh\yii2\gearman\JobWorkload
+     * @return JobWorkload
      */
     protected function getWorkload(\GearmanJob $job)
     {
         $workload = null;
         if($data = $job->workload()) {
-            $workload = unserialize($data);
+            $workload = Serialize::decode($data);
         }
         return $workload;
     }

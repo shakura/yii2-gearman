@@ -18,11 +18,11 @@ class JobWorkload extends \yii\base\Object implements \Serializable
     
     public function serialize()
     {
-        return serialize($this->params);
+        return Serialize::encode($this->params);
     }
 
     public function unserialize($serialized)
     {
-        $this->params = unserialize($serialized);
+        $this->params = Serialize::decode($serialized);
     }
 }
