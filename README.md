@@ -2,7 +2,6 @@ yii2-gearman
 ============
 
 Forked from [shakura/yii2-gearman](https://github.com/shakura/yii2-gearman).
-The goal of the project is opportunity of starting multiple worker processes on one machine. 
 
 ## Installation
 
