@@ -1,7 +1,7 @@
 yii2-gearman
 ============
 
-This extension built on [this](https://github.com/Filsh/yii2-gearman) and [this](https://github.com/sinergi/gearman).
+Forked from (shakura/yii2-gearman)[https://github.com/shakura/yii2-gearman].
 The goal of the project is opportunity of starting multiple worker processes on one machine. 
 
 ## Installation
