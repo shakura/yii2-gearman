@@ -1,7 +1,6 @@
 <?php
-namespace shakura\yii2\gearman;
+namespace thmrxx\yii2\gearman;
 
-use Serializable;
 use Psr\Log\LoggerInterface;
 
 class Process

@@ -1,5 +1,5 @@
 <?php
-namespace shakura\yii2\gearman;
+namespace thmrxx\yii2\gearman;
 
 use Closure;
 use Exception;
@@ -8,8 +8,7 @@ use Psr\Log\LoggerInterface;
 use React\EventLoop\Factory as Loop;
 use React\EventLoop\LibEventLoop;
 use React\EventLoop\StreamSelectLoop;
-use Serializable;
-use shakura\yii2\gearman\exception\InvalidBootstrapClassException;
+use thmrxx\yii2\gearman\exception\InvalidBootstrapClassException;
 
 class Application
 {

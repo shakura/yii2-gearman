@@ -1,12 +1,10 @@
 <?php
 
-namespace shakura\yii2\gearman;
+namespace thmrxx\yii2\gearman;
 
 use Yii;
 use yii\console\Controller;
 use yii\helpers\Console;
-use shakura\yii2\gearman\Process;
-use shakura\yii2\gearman\Application;
 
 class GearmanController extends Controller
 {
@@ -16,7 +14,11 @@ class GearmanController extends Controller
     public $fork = false;
     
     public $gearmanComponent = 'gearman';
-    
+
+    /**
+     * @param $id
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionStart($id)
     {
         $app = $this->getApplication($id);
@@ -84,9 +86,15 @@ class GearmanController extends Controller
         
         return array_merge(parent::options($id), $options);
     }
-    
+
+    /**
+     * @param $id
+     * @return Application
+     * @throws \yii\base\InvalidConfigException
+     */
     protected function getApplication($id)
     {
+        /** @var GearmanComponent $component */
         $component = Yii::$app->get($this->gearmanComponent);
         return $component->getApplication($id);
     }

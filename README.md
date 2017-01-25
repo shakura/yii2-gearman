@@ -1,8 +1,7 @@
 yii2-gearman
 ============
 
-This extension built on [this](https://github.com/Filsh/yii2-gearman) and [this](https://github.com/sinergi/gearman).
-The goal of the project is opportunity of starting multiple worker processes on one machine. 
+Forked from [shakura/yii2-gearman](https://github.com/shakura/yii2-gearman).
 
 ## Installation
 
@@ -11,7 +10,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ```json
 {
     "require": {
-       "shakura/yii2-gearman": "dev-master"
+       "thmrxx/yii2-gearman": "dev-master"
     }
 }
 ```
@@ -21,7 +20,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ```php
 'components' => [
   'gearman' => [
-      'class' => 'shakura\yii2\gearman\GearmanComponent',
+      'class' => 'thmrxx\yii2\gearman\GearmanComponent',
       'servers' => [
           ['host' => '127.0.0.1', 'port' => 4730],
       ],
@@ -37,7 +36,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ...
 'controllerMap' => [
     'gearman' => [
-        'class' => 'shakura\yii2\gearman\GearmanController',
+        'class' => 'thmrxx\yii2\gearman\GearmanController',
         'gearmanComponent' => 'gearman'
     ],
     ...
@@ -49,7 +48,7 @@ It is recommended that you install the Gearman library [through composer](http:/
 ```php
 namespace common\jobs;
 
-use shakura\yii2\gearman\JobBase;
+use thmrxx\yii2\gearman\JobBase;
 
 class SyncCalendar extends JobBase
 {

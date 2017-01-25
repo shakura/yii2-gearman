@@ -1,6 +1,6 @@
 <?php
 
-namespace shakura\yii2\gearman;
+namespace thmrxx\yii2\gearman;
 
 class JobWorkload extends \yii\base\Object implements \Serializable
 {
@@ -18,11 +18,11 @@ class JobWorkload extends \yii\base\Object implements \Serializable
     
     public function serialize()
     {
-        return serialize($this->params);
+        return Serialize::encode($this->params);
     }
 
     public function unserialize($serialized)
     {
-        $this->params = unserialize($serialized);
+        $this->params = Serialize::decode($serialized);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace shakura\yii2\gearman;
+namespace thmrxx\yii2\gearman;
 
 use Psr\Log\LoggerInterface;
 
@@ -115,16 +115,16 @@ class Dispatcher
             $this->logger->debug("Job \"{$name}\" returned {$result}");
         }
 
-        return unserialize($result);
+        return $result;
     }
 
     /**
      * @param mixed $data
      * @return string
      */
-    private function serialize($data = [])
+    public function serialize($data = [])
     {
-        return serialize($data);
+        return Serialize::encode($data);
     }
 
     /**
