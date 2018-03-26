@@ -2,7 +2,7 @@
 
 namespace shakura\yii2\gearman;
 
-class JobWorkload extends \yii\base\Object implements \Serializable
+class JobWorkload extends \yii\base\BaseObject implements \Serializable
 {
     protected $params = [];
     
